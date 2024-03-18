@@ -1,0 +1,2665 @@
+openapi: 3.0.0
+info:
+  description: "API de RenPlay para la gestión de contenidos multimedia"
+  version: "1.0.0"
+  title: "RenPlay API"
+ 
+tags:
+  - name: "music"
+    description: "Operaciones relacionadas con la música"
+  - name: "audiobooks"
+    description: "Operaciones relacionadas con los audiolibros"
+  - name: "subscription"
+    description: "Gestión de suscripciones de usuarios"
+  - name: "creators"
+    description: "Interacciones con los creadores de contenido"
+  - name: "homeLib"
+    description: "Biblioteca principal de contenido de RenPlay"
+  - name: "users"
+    description: "Operaciones sobre los usuarios de RenPlay"
+  - name: "home"
+    description: "Biblioteca principal de contenido de RenPlay"
+  - name: "RelatedContent"
+    description: "Contenido relacionado"
+servers:
+  - url: "https://api.renplay.com"
+  - url: "https://api2.guiah.tv"
+paths:
+
+#Music, aún me faltan
+  /music/search:
+    put:
+      tags:
+        - "music"
+      summary: " Busqueda global de contenido"
+      description: "Este endpoint está relacionado con la búsqueda en la biblioteca de música, permitiendo a los usuarios encontrar canciones y álbumes utilizando diversos criterios."
+      operationId: "searchMusic"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                DeviceID:
+                  type: "string"
+                  description: "Identificador único del dispositivo desde el que se realiza la búsqueda."
+                  example: "cmMdk1g8E-ID40g0cqe8tiGb5AlGnlKLcPaVRKkrv2g"
+                ProfileID:
+                  type: "integer"
+                  description: "Identificador del perfil de usuario que realiza la búsqueda."
+                  example: 216
+                Query:
+                  type: "string"
+                  description: "Término de búsqueda para encontrar música relacionada."
+                  example: "Ruddy"
+      responses:
+        "200":
+          description: ""
+          
+        "400":
+          description: ""
+
+
+  /music/album/{albumId}:
+    put:
+      tags:
+        - "music"
+      summary: "Actualizar la información del álbum"
+      description: "Este endpoint muestra el álbum llamado por medio del id. "
+      operationId: "updateAlbumInfo"
+      parameters:
+        - name: "albumId"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            description: "El ID único del álbum que se va a actualizar."
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                DeviceID:
+                  type: "string"
+                  example: "cmMdk1g8E-ID40g0cqe8tiGb5AlGnlKLcPaVRKkrv2g"
+                ProfileID:
+                  type: "integer"
+                  example: 216
+      responses:
+        "200":
+          description: ""
+      
+        "404":
+          description: ""
+  /music/artist/{artistId}:
+    put:
+      tags:
+        - "music"
+      summary: "Obtener información del artista"
+      description: "Este endpoint muestra el artista identificado por medio del id. "
+      operationId: "getArtistInfo"
+      parameters:
+        - name: "artistId"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            description: "El ID único del artista que se está consultando."
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                DeviceID:
+                  type: "string"
+                  example: "cmMdk1g8E-ID40g0cqe8tiGb5AlGnlKLcPaVRKkrv2g"
+                ProfileID:
+                  type: "integer"
+                  example: 216
+      responses:
+        "200":
+          description: "Información del artista obtenida con éxito."
+        "404":
+          description: "Artista no encontrado."
+  /music/pl:
+    post:
+      tags:
+        - "music"
+      summary: "Crear una nueva playlist"
+      description: "Este endpoint se utiliza para crear una nueva playlist en la biblioteca de música. Se requiere un cuerpo de solicitud con DeviceID, ProfileID y los detalles de la nueva playlist a crear."
+      operationId: "createPlaylist"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                DeviceID:
+                  type: "string"
+                  example: "cmMdk1g8E-ID40g0cqe8tiGb5AlGnlKLcPaVRKkrv2g"
+                ProfileID:
+                  type: "integer"
+                  example: 216
+                MusicCollectionDTO:
+                  type: "object"
+                  properties:
+                    Title:
+                      type: "string"
+                      example: "Prueba de PlayList en HomeLib"
+                    Description:
+                      type: "string"
+                      example: "De todo un poco"
+                    IsPublic:
+                      type: "boolean"
+                      example: false
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: ""
+    put:
+      tags:
+        - "music"
+      summary: "Editar una playlist existente"
+      description: "Este endpoint se utiliza para actualizar una playlist existente en la biblioteca de música. Se requiere un cuerpo de solicitud con DeviceID, ProfileID y los detalles actualizados de la playlist."
+      operationId: "updatePlaylist"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                DeviceID:
+                  type: "string"
+                  example: "cmMdk1g8E-ID40g0cqe8tiGb5AlGnlKLcPaVRKkrv2g"
+                ProfileID:
+                  type: "integer"
+                  example: 216
+                MusicCollectionDTO:
+                  type: "object"
+                  properties:
+                    RegID:
+                      type: "integer"
+                      example: 2254
+                    Title:
+                      type: "string"
+                      example: "Prueba de Edicion PlayList RenPlay"
+                    Description:
+                      type: "string"
+                      example: "De todo un poco"
+                    IsPublic:
+                      type: "boolean"
+                      example: true
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: ""
+    delete:
+      tags:
+        - "music"
+      summary: "Eliminar una playlist"
+      description: "Este endpoint elimina una playlist específica de la biblioteca de música."
+      operationId: "deletePlaylist"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                DeviceID:
+                  type: "string"
+                  example: "-C3M-VzZxiTrpuzNJkXV-DWaUF5_3VhoOGtEV3zQn0k"
+                ProfileID:
+                  type: "integer"
+                  example: 63
+                MusicCollectionDTO:
+                  type: "object"
+                  properties:
+                    RegID:
+                      type: "integer"
+                      example: 2233
+                    Title:
+                      type: "string"
+                    Description:
+                      type: "string"
+                    IsPublic:
+                      type: "boolean"
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: ""
+
+       
+  /music/pl/track:
+    post:
+      tags:
+        - "music"
+      summary: "Agregar track a PlayList"
+      description: "Este endpoint agrega un track específico a una playlist existente en la biblioteca de música, utilizando el ID de la playlist y el ID del track."
+      operationId: "addTrackToPlaylist"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                DeviceID:
+                  type: "string"
+                  example: "cmMdk1g8E-ID40g0cqe8tiGb5AlGnlKLcPaVRKkrv2g"
+                ProfileID:
+                  type: "integer"
+                  example: 216
+                CollectionTrackDTO:
+                  type: "object"
+                  properties:
+                    PlayListID:
+                      type: "integer"
+                      example: 2268
+                    TrackID:
+                      type: "integer"
+                      example: 197
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: ""
+        "404":
+          description: ""
+    delete:
+      tags:
+        - "music"
+      summary: "Eliminar track de una playlist"
+      description: "Este endpoint elimina un track específico de una playlist en la biblioteca de música."
+      operationId: "deleteTrackFromPlaylist"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                DeviceID:
+                  type: "string"
+                  example: "cmMdk1g8E-ID40g0cqe8tiGb5AlGnlKLcPaVRKkrv2g"
+                ProfileID:
+                  type: "integer"
+                  example: 216
+                CollectionTrackDTO:
+                  type: "object"
+                  properties:
+                    PlayListID:
+                      type: "integer"
+                      example: 2268
+                    TrackID:
+                      type: "integer"
+                      example: 197
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: ""
+        "404":
+          description: ""
+
+  /music/myplaylist:
+    put:
+      tags:
+        - "music"
+      summary: "Obtiene los PlayList de usuario por ProfileID"
+      description: "Recupera las playlists asociadas con un ProfileID específico."
+      operationId: "getUserPlaylistsByProfileID"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                DeviceID:
+                  type: "string"
+                  description: "Identificador único del dispositivo."
+                  example: "cmMdk1g8E-ID40g0cqe8tiGb5AlGnlKLcPaVRKkrv2g"
+                ProfileID:
+                  type: "integer"
+                  description: "Identificador del perfil de usuario para el cual se recuperan las playlists."
+                  example: 216
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: ""
+
+
+  /music/tracklink:
+    put:
+      tags:
+        - "music"
+      summary: "Actualizar o asociar enlace de track"
+      description: "Este endpoint actualiza o asocia un enlace a un track específico en la biblioteca de música, utilizando el ID del track y el tipo de contenido."
+      operationId: "updateTrackLink"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                DeviceID:
+                  type: "string"
+                  example: "7R88UtJ6ZyqhLtzq2mS-KG0zJDXGaD9EH-GxoBWjZLM"
+                ProfileID:
+                  type: "integer"
+                  example: 168
+                ContentType:
+                  type: "string"
+                  example: "track"
+                TrackID:
+                  type: "integer"
+                  example: 262
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: ""
+        "404":
+          description: ""
+          
+          
+  #AudioBooks
+  /music/audiobook/{id}:
+      put:
+        tags:
+          - "audiobooks"
+        summary: "Obtener detalles de un audiolibro"
+        description: "Este endpoint recupera los detalles de un audiolibro específico utilizando su ID único."
+        operationId: "getAudiobookDetails"
+        parameters:
+          - name: "id"
+            in: "path"
+            required: true
+            schema:
+              type: "integer"
+              description: "El ID único del audiolibro que se está consultando."
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  DeviceID:
+                    type: "string"
+                    description: "Identificador único del dispositivo desde el que se realiza la solicitud."
+                    example: "ptUzIvosug1X4l9xxjmVvX2MhTIRkCL1psEJDsthFw0"
+                  ProfileID:
+                    type: "integer"
+                    description: "Identificador del perfil de usuario que realiza la solicitud."
+                    example: 54
+        responses:
+          "200":
+            description: "Detalles del audiolibro obtenidos con éxito."
+          "400":
+            description: "Solicitud inválida debido a datos faltantes o incorrectos."
+          "404":
+            description: "Audiolibro no encontrado."
+            
+  #Duda sobre este
+  /music/feedback:
+    put:
+      tags:
+        - "music"
+      summary: "Enviar feedback sobre un elemento musical"
+      description: "Permite a los usuarios enviar feedback sobre varios elementos musicales, como tracks, colecciones de música, álbumes, audiolibros, pistas de audiolibros, podcasts, pistas de podcasts y artistas."
+      operationId: "sendFeedbackOnMusicElement"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                DeviceID:
+                  type: "string"
+                  example: "v9aK1dAIg2fqaapqLsiXSE9n9ngKkvIdwkbrW5-pgV0"
+                ProfileID:
+                  type: "integer"
+                  example: 1
+                IsLiked:
+                  type: "boolean"
+                  example: false
+                TrackID:
+                  type: "integer"
+                  example: 21
+                MusicCollectionID:
+                  type: "integer"
+                  example: 21
+                AlbumID:
+                  type: "integer"
+                  example: 21
+                AudiobookID:
+                  type: "integer"
+                  example: 21
+                AudiobookTrackID:
+                  type: "integer"
+                  example: 21
+                PodcastID:
+                  type: "integer"
+                  example: 21
+                PodcastTrackID:
+                  type: "integer"
+                  example: 21
+                ArtistID:
+                  type: "integer"
+                  example: 21
+              oneOf:
+                - required: ["TrackID"]
+                - required: ["MusicCollectionID"]
+                - required: ["AlbumID"]
+                - required: ["AudiobookID"]
+                - required: ["AudiobookTrackID"]
+                - required: ["PodcastID"]
+                - required: ["PodcastTrackID"]
+                - required: ["ArtistID"]
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: ""
+   #Duda sobre este.
+  /music/podcast/{id}:
+      put:
+        tags:
+          - "music"
+        summary: "Obtener información de un podcast"
+        description: "Recupera la información sobre un podcast específico basado en su ID."
+        operationId: "getPodcastInfo"
+        parameters:
+          - name: "id"
+            in: "path"
+            required: true
+            description: "ID único del podcast a obtener."
+            schema:
+              type: "integer"
+              example: 2
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  DeviceID:
+                    type: "string"
+                    example: "cmMdk1g8E-ID40g0cqe8tiGb5AlGnlKLcPaVRKkrv2g"
+                  ProfileID:
+                    type: "integer"
+                    example: 216
+        responses:
+          "200":
+            description: ""
+          "400":
+            description: ""
+#Suscription
+            
+  /subscription/status:
+      put:
+        tags:
+          - "subscription"
+        summary: "Consultar el estado de la suscripción"
+        description: "Este endpoint permite consultar el estado actual de la suscripción de un usuario, identificado por el DeviceID proporcionado en el cuerpo de la solicitud."
+        operationId: "getSubscriptionStatus"
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  DeviceID:
+                    type: "string"
+                    description: "Identificador único del dispositivo desde el que se realiza la solicitud."
+                    example: "Wf7cvGxkxsi7adNdnHw4IweiFBD1oQpuA8gjTavhlc"
+        responses:
+          "200":
+            description: ""
+          "400":
+            description: ""
+          "401":
+            description: ""
+          "404":
+            description: ""
+  /subscription/packs:
+      put:
+        tags:
+          - "subscription"
+        summary: "Consultar paquetes de suscripción disponibles"
+        description: "Este endpoint permite a los usuarios consultar los paquetes de suscripción disponibles, identificados por el SuscriberID proporcionado en el cuerpo de la solicitud."
+        operationId: "getSubscriptionPackages"
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  SuscriberID:
+                    type: "string"
+                    description: "Identificador único del suscriptor que realiza la consulta."
+                    example: "FbYDCn3Qr0uWq6ZferRxWTgspxzmEJfPHTUBfn8OJFE"
+        responses:
+          "200":
+            description: "Consulta de paquetes de suscripción realizada con éxito."
+          "400":
+            description: "Solicitud inválida debido a datos faltantes o incorrectos."
+          "401":
+            description: "No autorizado. Se requiere autenticación para acceder a este recurso."
+          "404":
+            description: "Suscriptor no encontrado."
+  /subscription/demo:
+      put:
+        tags:
+          - "subscription"
+        summary: "Obtener una demostración de la suscripción"
+        description: "Este endpoint proporciona acceso a una demostración de los servicios de suscripción disponibles, utilizando el ID del suscriptor proporcionado en el cuerpo de la solicitud."
+        operationId: "getSubscriptionDemo"
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  SuscriberID:
+                    type: "string"
+                    description: "Identificador único del suscriptor que solicita la demostración."
+                    example: "h3lZVO-mkP2NfTq5p8LObLzhPg0CMp9rdQwqFVpk0TA="
+        responses:
+          "200":
+            description: ""
+          "400":
+            description: ""
+          "401":
+            description: ""
+          "404":
+            description: ""
+  /subscription/valcup:
+      put:  
+        tags:
+          - "subscription"
+        summary: "Validar un cupón de promoción"
+        description: "Este endpoint permite a los usuarios validar un cupón de promoción proporcionando un código de promoción y el ID de registro de suscriptor."
+        operationId: "validatePromoCode"
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  PromoCode:
+                    type: "string"
+                    description: "Código del cupón de promoción a validar."
+                    example: "PromoTest2023OK"
+                  SubRegID:
+                    type: "integer"
+                    description: "Identificador de registro del suscriptor."
+                    example: 10
+        responses:
+          "200":
+            description: ""
+          "400":
+            description: ""
+          "401":
+            description: ""
+          "404":
+            description: ""
+  /subscription/subscribe:
+      put:
+        tags:
+          - "subscription"
+        summary: "Agregar suscripción a un usuario"
+        description: "Este endpoint permite agregar una suscripción a un usuario proporcionando los detalles del suscriptor, la información de la suscripción y los datos de la tarjeta de pago."
+        operationId: "addSubscriptionToUser"
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  SuscriberID:
+                    type: "string"
+                    description: "Identificador único del suscriptor."
+                    example: "RY04h49NYHaeaygGdK1bNnfQ8om0TAMVrG8CRpxw40E"
+                  SubscriptionInfo:
+                    type: "object"
+                    properties:
+                      SubID:
+                        type: "integer"
+                        description: "Identificador de la suscripción."
+                        example: 11
+                      AmountDebt:
+                        type: "integer"
+                        description: "Monto de deuda de la suscripción."
+                        example: 129
+                      DiscountCode:
+                        type: "string"
+                        description: "Código de descuento aplicado a la suscripción."
+                        nullable: true
+                  PaymentCard:
+                    type: "object"
+                    properties:
+                      card_number:
+                        type: "string"
+                        description: "Número de la tarjeta de pago."
+                        example: "5103326184884934"
+                      holder_name:
+                        type: "string"
+                        description: "Nombre del titular de la tarjeta."
+                        example: "Sary Cazares"
+                      expiration_year:
+                        type: "string"
+                        description: "Año de vencimiento de la tarjeta."
+                        example: "24"
+                      expiration_month:
+                        type: "string"
+                        description: "Mes de vencimiento de la tarjeta."
+                        example: "08"
+                      cvv2:
+                        type: "string"
+                        description: "Código de seguridad de la tarjeta (CVV2)."
+                        example: "123"
+        responses:
+          "200":
+            description: ""
+          "400":
+            description: ""
+            
+#home
+
+  /music/spotlight/home:
+      put:
+        tags:
+          - "home"
+        summary: "Obtener contenidos destacados de música para la página principal"
+        description: "Este endpoint, parte de la biblioteca principal de RenPlay (`homeLib`), recupera los contenidos destacados de música para la página principal, basándose en el ID del dispositivo y el perfil del usuario."
+        operationId: "getMusicSpotlightForHome"
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  DeviceID:
+                    type: "string"
+                    description: "Identificador único del dispositivo desde el que se realiza la solicitud."
+                    example: "ObUdavVpzk32y8o-Y0KLPMZUDVz8WCTtIsUHdrX1ehE"
+                  ProfileID:
+                    type: "integer"
+                    description: "Identificador del perfil de usuario que realiza la solicitud. Un valor de 0 puede indicar una solicitud no autenticada o para un perfil por defecto."
+                    example: 0
+        responses:
+          "200":
+            description: ""
+          "400":
+            description: ""
+          "401":
+            description: ""
+          "404":
+            description: ""
+
+  /music/section/home:
+    put:
+      tags:
+        - "home"  # o "music" dependiendo de cómo estés organizando tus tags
+      summary: "Obtener la sección principal de música"
+      description: "Este endpoint recupera información destacada para la sección principal de música, basándose en el ID del dispositivo y el perfil del usuario."
+      operationId: "getMusicHomeSection"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                DeviceID:
+                  type: "string"
+                  description: "Identificador único del dispositivo desde el que se realiza la solicitud."
+                  example: "cmMdk1g8E-ID40g0cqe8tiGb5AlGnlKLcPaVRKkrv2g"
+                ProfileID:
+                  type: "integer"
+                  description: "Identificador del perfil de usuario que realiza la solicitud."
+                  example: 216
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: ""
+        "401":
+          description: ""
+        "404":
+          description: ""
+   #Users
+  /usr/login:
+      post:
+        tags:
+          - "users"
+        summary: "Login de usuario"
+        description: "Permite a los usuarios iniciar sesión proporcionando credenciales de email y contraseña, junto con información del dispositivo."
+        operationId: "userLogin"
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  Email:
+                    type: "string"
+                    format: "email"
+                    description: "Email del usuario."
+                    example: "copito_ibarra@hotmail.com"
+                  Password:
+                    type: "string"
+                    description: "Contraseña del usuario en formato codificado."
+                    example: "JDJhJDEwJGRsdzBEbXVMTzhDYS52amVuUXp2Nk8zNFQ0TTE5cUdtN0VFaU9hQ0xYd2Z3N3BueHd1LmVP"
+                  DeviceType:
+                    type: "string"
+                    description: "Tipo de dispositivo desde el cual se realiza la solicitud."
+                    example: "opera 104.0.0 Windows 10"
+                  DevicePlatform:
+                    type: "string"
+                    description: "Plataforma del dispositivo."
+                    example: "Web"
+                  DeviceVersion:
+                    type: "string"
+                    description: "Versión del dispositivo."
+                    example: "0.1.0"
+                  DeviceUUID:
+                    type: "string"
+                    description: "UUID único del dispositivo."
+                    example: "c9fc00ff7588c51a7753a6c56bea344d"
+        responses:
+          "200":
+            description: ""
+          "400":
+            description: ""
+          "401":
+            description: ""
+  /usr/create:
+      post:
+        tags:
+          - "users"
+        summary: "User Create"
+        description: "Crea un nuevo usuario en el sistema con la información proporcionada."
+        operationId: "userCreate"
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  UserName:
+                    type: "string"
+                    description: "Nombre de usuario."
+                    example: "Miles"
+                  Name:
+                    type: "string"
+                    description: "Nombre completo del usuario."
+                    example: "Bryan Nava"
+                  Email:
+                    type: "string"
+                    format: "email"
+                    description: "Email del usuario."
+                    example: "milestom22@hotmail.com"
+                  Phone:
+                    type: "string"
+                    description: "Número de teléfono del usuario."
+                    example: "528126613666"
+                  MasterPin:
+                    type: "integer"
+                    format: "int32"
+                    description: "PIN maestro del usuario."
+                    example: 1234
+                  Password:
+                    type: "string"
+                    description: "Contraseña del usuario."
+                    example: "A/OBs2V6ao/YePd9E83gCw=="
+        responses:
+          "200":
+            description: ""
+          "400":
+            description: ""
+          "409":
+            description: ""
+  /usr/validate/email:
+    get:
+      tags:
+        - "users"
+      summary: "User Validate Email"
+      description: "Valida si el correo electrónico proporcionado está registrado en el sistema."
+      operationId: "validateEmail"
+      parameters:
+        - in: "query"
+          name: "Email"
+          required: true
+          schema:
+            type: "string"
+            format: "email"
+          description: "El correo electrónico que se necesita validar."
+      responses:
+        "200":
+          description: ""
+        
+        "400":
+          description: ""
+  /usr/verify/email:
+    post:
+      tags:
+        - "users"
+      summary: "User Verify Email"
+      description: "Verifica el correo electrónico del usuario utilizando un código de verificación enviado previamente."
+      operationId: "verifyEmail"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                Email:
+                  type: "string"
+                  format: "email"
+                  description: "Correo electrónico del usuario a verificar."
+                  example: "mpadilla@lap55.com"
+                CodeVerification:
+                  type: "string"
+                  description: "Código de verificación enviado al correo electrónico del usuario."
+                  example: "8527"
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: ""
+        "404":
+          description: ""
+        "401":
+          description: ""
+
+
+
+
+
+  /usr/validate/phone:
+    post:
+      tags:
+        - "users"
+      summary: "User Validate Phone (se debe usar la api2 de guia)"
+      description: "Valida un número de teléfono en el sistema, posiblemente enviando un código de verificación mediante el método especificado."
+      operationId: "validatePhone"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                Phone:
+                  type: "string"
+                  description: "Número de teléfono que se necesita validar."
+                  example: "528110030854"
+                PhoneVerificationMethod:
+                  type: "integer"
+                  format: "int32"
+                  description: "Método de verificación de teléfono elegido. Por ejemplo, 1 podría representar SMS, 2 llamadas, etc."
+                  example: 1
+      responses:
+        "200":
+          description: "El número de teléfono es válido y se ha enviado el código de verificación."
+        "400":
+          description: ""
+
+  /usr/verify/phone:
+    post:
+      tags:
+        - "users"
+      summary: "User Verify Phone"
+      description: "Verifica el número de teléfono del usuario utilizando un código de verificación enviado previamente."
+      operationId: "verifyPhone"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                Phone:
+                  type: "string"
+                  description: "Número de teléfono del usuario a verificar."
+                  example: "528115557980"
+                CodeVerification:
+                  type: "string"
+                  description: "Código de verificación enviado al número de teléfono del usuario."
+                  example: "2870"
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: ""
+
+  /usr/update/name:
+    post:
+      tags:
+        - "users"
+      summary: "Actualizar Nombre de Usuario"
+      description: "Permite a los usuarios actualizar su nombre en el perfil."
+      operationId: "updateUserName"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                SuscriberID:
+                  type: "string"
+                  description: "Identificador único del suscriptor cuyo nombre se desea actualizar."
+                  example: "lYLUNRZ7dDCfaONqdkvB_KcfkdKku53Vhp8tOYwrriA"
+                Name:
+                  type: "string"
+                  description: "Nuevo nombre para el usuario."
+                  example: "Sary Cazarez"
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: ""
+        "404":
+          description: ""
+  /usr/update/masterpin:
+    post:
+      tags:
+        - "users"
+      summary: "Actualizar MasterPin del usuario"
+      description: "Permite al usuario actualizar su MasterPin."
+      operationId: "updateUserMasterPin"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                SuscriberID:
+                  type: "string"
+                  description: "Identificador único del suscriptor."
+                  example: "lYLUNRZ7dDCfaONqdkvB_KcfkdKku53Vhp8tOYwrriA"
+                MasterPin:
+                  type: "string"
+                  description: "Nuevo MasterPin del usuario."
+                  example: "0212"
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: ""
+       
+  /usr/update/pass:
+    post:
+      tags:
+        - "users"
+      summary: "Actualizar contraseña del usuario"
+      description: "Permite al usuario actualizar su contraseña."
+      operationId: "updateUserPassword"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                SuscriberID:
+                  type: "string"
+                  description: "Identificador único del suscriptor."
+                  example: "lYLUNRZ7dDCfaONqdkvB_KcfkdKku53Vhp8tOYwrriA"
+                Password:
+                  type: "string"
+                  description: "Nueva contraseña del usuario en formato codificado."
+                  example: "A/OBs2V6ao/YePd9E83gCw=="
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: ""
+        "401":
+          description: ""
+        "404":
+          description: ""
+        "429":
+          description: ""
+  /usr/update/email:
+    post:
+      tags:
+        - "users"
+      summary: "Actualizar correo electrónico del usuario"
+      description: "Permite al usuario actualizar su dirección de correo electrónico."
+      operationId: "updateUserEmail"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                SuscriberID:
+                  type: "string"
+                  description: "Identificador único del suscriptor."
+                  example: "lYLUNRZ7dDCfaONqdkvB_KcfkdKku53Vhp8tOYwrriA="
+                Email:
+                  type: "string"
+                  format: "email"
+                  description: "Nueva dirección de correo electrónico del usuario."
+                  example: "donpec@me.com"
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: ""
+      
+  /usr/reset/pass:
+    post:
+      tags:
+        - "users"
+      summary: "Reiniciar contraseña del usuario"
+      description: "Permite a los usuarios reiniciar su contraseña utilizando un método de verificación telefónica."
+      operationId: "resetUserPassword"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                Email:
+                  type: "string"
+                  format: "email"
+                  description: "Correo electrónico del usuario para el cual se solicita el reinicio de contraseña."
+                  example: "mpadilla@lap55.com"
+                PhoneVerificationMethod:
+                  type: "integer"
+                  format: "int32"
+                  description: "Método de verificación telefónica seleccionado para el reinicio de contraseña."
+                  example: 0
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: ""
+        "401":
+          description: ""
+        "404":
+          description: ""
+        "429":
+          description: ""
+  /usr/update/phone:
+    post:
+      tags:
+        - "users"
+      summary: "Actualizar número de teléfono del usuario"
+      description: "Permite al usuario actualizar su número de teléfono utilizando un método de verificación telefónica."
+      operationId: "updateUserPhone"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                SuscriberID:
+                  type: "string"
+                  description: "Identificador único del suscriptor."
+                  example: "Xqb17-cj7huwqJKUqdVqoEECifdh_ae1-t1LnZyqkPI="
+                Phone:
+                  type: "string"
+                  description: "Nuevo número de teléfono del usuario."
+                  example: "528115557980"
+                PhoneVerificationMethod:
+                  type: "integer"
+                  format: "int32"
+                  description: "Método de verificación telefónica seleccionado para la actualización del número de teléfono."
+                  example: 0
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: ""
+      
+  /usr/update/user:
+    post:
+      tags:
+        - "users"
+      summary: "Actualizar nombre de usuario"
+      description: "Permite al usuario actualizar su nombre de usuario."
+      operationId: "updateUsername"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                SuscriberID:
+                  type: "string"
+                  description: "Identificador único del suscriptor."
+                  example: "lYLUNRZ7dDCfaONqdkvB_KcfkdKku53Vhp8tOYwrriA"
+                UserName:
+                  type: "string"
+                  description: "Nuevo nombre de usuario."
+                  example: "SaryMyster"
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: ""
+   
+  /usr/delete:
+    post:
+      tags:
+        - "users"
+      summary: "Eliminar usuario"
+      description: "Permite eliminar un usuario del sistema utilizando su identificador de registro y el identificador del suscriptor."
+      operationId: "deleteUser"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                UserReg:
+                  type: "integer"
+                  format: "int64"
+                  description: "Identificador de registro del usuario a eliminar."
+                  example: 18162
+                SuscriberID:
+                  type: "string"
+                  description: "Identificador único del suscriptor asociado al usuario."
+                  example: "5eBlRQCL9xR7Ev-cYy1KmJJmQ22G8CZXGW7ibqNKMTc"
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: ""
+
+  /usr/info:
+    put:
+      tags:
+        - "users"
+      summary: "Obtener información del usuario"
+      description: "Permite obtener la información detallada del usuario basada en su SuscriberID."
+      operationId: "getUserInfo"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                SuscriberID:
+                  type: "string"
+                  description: "Identificador único del suscriptor para el cual se solicita la información."
+                  example: "Xqb17-cj7huwqJKUqdVqoEECifdh_ae1-t1LnZyqkPI="
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: ""
+        
+  /usr/validation:
+    post:
+      tags:
+        - "users"
+      summary: "Validación de usuario"
+      description: "Permite validar la cuenta de un usuario mediante un código de verificación enviado a su correo electrónico."
+      operationId: "validateUser"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                Email:
+                  type: "string"
+                  format: "email"
+                  description: "Correo electrónico del usuario a validar."
+                  example: "mpadilla@lap55.com"
+                CodeVerification:
+                  type: "string"
+                  description: "Código de verificación enviado al correo electrónico del usuario."
+                  example: "4230"
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: ""
+  /usr/profiles:
+    put:
+      tags:
+        - "users"
+      summary: "Lista de Perfiles"
+      description: "Obtiene la lista de perfiles asociados al SuscriberID proporcionado."
+      operationId: "listUserProfiles"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                SuscriberID:
+                  type: "string"
+                  description: "Identificador único del suscriptor para el cual se solicita la lista de perfiles."
+                  example: "27blcujcwu8FJpsD2wQeuY0EthZD85_8Lqgn0XUXI9A"
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: ""
+  /usr/profile:
+    post:
+      tags:
+        - "users"
+      summary: "Agregar un perfil al usuario"
+      description: "Crea un nuevo perfil de usuario bajo el SuscriberID dado."
+      operationId: "addUserProfile"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                SuscriberID:
+                  type: "string"
+                  description: "Identificador único del suscriptor."
+                  example: "Xqb17-cj7huwqJKUqdVqoEECifdh_ae1-t1LnZyqkPI="
+                UserProfile:
+                  type: "object"
+                  properties:
+                    Name:
+                      type: "string"
+                      description: "Nombre del perfil."
+                      example: "Pec"
+                    ImageID:
+                      type: "integer"
+                      description: "Identificador de la imagen del perfil."
+                      example: 1
+                    NumericPin:
+                      type: "string"
+                      description: "PIN numérico para el perfil."
+                      example: "2002"
+                    IsAKid:
+                      type: "boolean"
+                      description: "Indica si el perfil es de un niño."
+                      example: false
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: ""
+
+    delete:
+      tags:
+        - "users"
+      summary: "Eliminar perfil de usuario"
+      description: "Elimina un perfil de usuario basado en el SuscriberID y ProfileRegID dados."
+      operationId: "deleteUserProfile"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                SuscriberID:
+                  type: "string"
+                  description: "Identificador único del suscriptor."
+                  example: "Xqb17-cj7huwqJKUqdVqoEECifdh_ae1-t1LnZyqkPI="
+                ProfileRegID:
+                  type: "integer"
+                  format: "int32"
+                  description: "Identificador del registro del perfil a eliminar."
+                  example: 43
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: ""
+  /usr/profiles/imgs:
+    put:
+      tags:
+        - "users"
+      summary: "Imágenes para Perfiles"
+      description: "Obtiene una lista de imágenes disponibles para los perfiles del usuario."
+      operationId: "getProfileImages"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                SuscriberID:
+                  type: "string"
+                  description: "Identificador único del suscriptor para el cual se solicitan las imágenes."
+                  example: "Xqb17-cj7huwqJKUqdVqoEECifdh_ae1-t1LnZyqkPI="
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: ""
+  /usr/devices:
+    put:
+      tags:
+        - "users"
+      summary: "Lista de dispositivos de usuario"
+      description: "Obtiene la lista de dispositivos asociados al SuscriberID proporcionado."
+      operationId: "listUserDevices"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                SuscriberID:
+                  type: "string"
+                  description: "Identificador único del suscriptor cuya lista de dispositivos se solicita."
+                  example: "Xqb17-cj7huwqJKUqdVqoEECifdh_ae1-t1LnZyqkPI="
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: ""
+
+  /usr/device:
+    delete:
+      tags:
+        - "users"
+      summary: "Elimina un dispositivo"
+      description: "Elimina un dispositivo asociado al SuscriberID y SubscriberDeviceID proporcionados."
+      operationId: "deleteUserDevice"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                SuscriberID:
+                  type: "string"
+                  description: "Identificador único del suscriptor asociado al dispositivo."
+                  example: "Xqb17-cj7huwqJKUqdVqoEECifdh_ae1-t1LnZyqkPI="
+                SubscriberDeviceID:
+                  type: "string"
+                  description: "Identificador único del dispositivo a eliminar."
+                  example: "XXReCc22JxHAdjZEYS9dewV_OemgCTwRJ9hauuHXh3I"
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: ""
+  #Falla por cantidad de lineas en respuesta
+  /creators/list/artist:
+    put:
+      tags:
+        - "creators"
+      summary: "Obtener la lista de artistas"
+      description: "Devuelve una lista de artistas asociados con el creador especificado por el CreatorID."
+      operationId: "listArtistsByCreator"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                CreatorID:
+                  type: "string"
+                  example: "UmVuUGxheTIwMjMk"
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: ""
+        "404":
+          description: ""
+   ####
+  /creators/artist:
+    put:
+      tags:
+        - "creators"
+      summary: "Editar información de un artista"
+      description: "Actualiza la información de un artista basado en el CreatorID y los detalles provistos."
+      operationId: "editArtistInfo"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                CreatorID:
+                  type: "string"
+                  example: "UmVuUGxheTIwMjMk"
+                Artist:
+                  type: "object"
+                  properties:
+                    Title:
+                      type: "string"
+                      example: "Armando Sanchez"
+                    Description:
+                      type: "string"
+                      example: "Cantautor con una pasión extrema por compartir el mensaje de Jesús a través de la música y la palabra de Dios..."
+                    PortadaURL:
+                      type: "string"
+                      format: "uri"
+                      example: "https://mtracks.azureedge.net/public/images/artists/cover/512/915.jpg"
+                    ArtistID:
+                      type: "integer"
+                      example: 24
+                    Active:
+                      type: "boolean"
+                      example: true
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: ""
+        "404":
+          description: ""
+
+    post:
+      tags:
+        - "creators"
+      summary: "Crear un nuevo artista"
+      description: "Permite a los creadores añadir un nuevo artista a su lista con la información proporcionada."
+      operationId: "createArtist"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                CreatorID:
+                  type: "string"
+                  example: "UmVuUGxheTIwMjMk"
+                Artist:
+                  type: "object"
+                  properties:
+                    Title:
+                      type: "string"
+                      example: "Marcelas Gandara"
+                    Description:
+                      type: "string"
+                      example: "Marcela Gándara es una cantante y compositora mexicana de música cristiana..."
+                    PortadaURL:
+                      type: "string"
+                      format: "uri"
+                      example: "https://i.scdn.co/image/ab6761670000ecd41289c047f12ab28f2e713e54"
+                    Active:
+                      type: "boolean"
+                      example: true
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: ""
+    delete:
+          tags:
+            - "creators"
+          summary: "Eliminar un artista"
+          description: "Elimina un artista específico asociado con el creador especificado por el CreatorID."
+          operationId: "deleteArtist"
+          requestBody:
+            required: true
+            content:
+              application/json:
+                schema:
+                  type: "object"
+                  properties:
+                    CreatorID:
+                      type: "string"
+                      example: "UmVuUGxheTIwMjMk"
+                    Artist:
+                      type: "object"
+                      properties:
+                        ArtistID:
+                          type: "integer"
+                          example: 29
+          responses:
+            "200":
+              description: ""
+            "400":
+              description: ""
+          ####################
+  /creators/album:
+    post:
+      tags:
+        - "creators"
+      summary: "Crear un nuevo álbum"
+      description: "Permite a los creadores añadir un nuevo álbum a su catálogo con la información proporcionada."
+      operationId: "createAlbum"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                CreatorID:
+                  type: "string"
+                  example: "UmVuUGxheTIwMjMk"
+                Album:
+                  type: "object"
+                  properties:
+                    Title:
+                      type: "string"
+                      example: "Mi Refugio"
+                    Description:
+                      type: "string"
+                    Length:
+                      type: "integer"
+                      example: 3281
+                    PortadaURL:
+                      type: "string"
+                      format: "uri"
+                      example: "https://i.scdn.co/image/ab67616d00001e027d3622529b03dab74f93e2d9"
+                    ReleaseDate:
+                      type: "string"
+                      format: "date-time"
+                      example: "2012-08-09T00:00:00"
+                    TotalItems:
+                      type: "integer"
+                      example: 13
+                    Artists:
+                      type: "array"
+                      items:
+                        type: "object"
+                        properties:
+                          ArtistID:
+                            type: "integer"
+                    Active:
+                      type: "boolean"
+                      example: true
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: ""
+    put:
+      tags:
+        - "creators"
+      summary: "Editar información de un álbum"
+      description: "Actualiza la información de un álbum existente basado en el CreatorID y los detalles proporcionados en el cuerpo de la solicitud."
+      operationId: "editAlbum"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                CreatorID:
+                  type: "string"
+                  example: "UmVuUGxheTIwMjMk"
+                Album:
+                  type: "object"
+                  properties:
+                    AlbumID:
+                      type: "integer"
+                      example: 9
+                    Title:
+                      type: "string"
+                      example: "Mi Refugio"
+                    Description:
+                      type: "string"
+                    Length:
+                      type: "integer"
+                      example: 3281
+                    PortadaURL:
+                      type: "string"
+                      format: "uri"
+                      example: "https://i.scdn.co/image/ab67616d00001e027d3622529b03dab74f93e2d9"
+                    ReleaseDate:
+                      type: "string"
+                      format: "date-time"
+                      example: "2012-08-09T00:00:00"
+                    TotalItems:
+                      type: "integer"
+                      example: 13
+                    Artists:
+                      type: "array"
+                      items:
+                        type: "object"
+                        properties:
+                          ArtistID:
+                            type: "integer"
+                    Active:
+                      type: "boolean"
+                      example: true
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: ""
+    delete:
+      tags:
+        - "creators"
+      summary: "Eliminar un álbum"
+      description: "Elimina un álbum asociado con el creador especificado por el CreatorID."
+      operationId: "deleteAlbumByCreator"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                CreatorID:
+                  type: "string"
+                  example: "UmVuUGxheTIwMjMk"
+                Album:
+                  type: "object"
+                  properties:
+                    AlbumID:
+                      type: "integer"
+                      example: 10
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: ""
+ #############################
+  /creators/list/album:
+    put:
+      tags:
+        - "creators"
+      summary: "Obtener lista de álbumes"
+      description: "Obtiene una lista de todos los álbumes asociados con el creador especificado por el CreatorID."
+      operationId: "listAlbumsByCreator"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                CreatorID:
+                  type: "string"
+                  example: "UmVuUGxheTIwMjMk"
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: ""
+  /creators/album/track:
+    post:
+      tags:
+        - "creators"
+      summary: "Crear una nueva pista en un álbum"
+      description: "Permite a los creadores añadir una nueva pista a un álbum en su catálogo con la información proporcionada."
+      operationId: "createAlbumTrack"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                CreatorID:
+                  type: "string"
+                  example: "UmVuUGxheTIwMjMk"
+                Track:
+                  type: "object"
+                  properties:
+                    Title:
+                      type: "string"
+                      example: "Emanuel"
+                    Length:
+                      type: "integer"
+                      example: 330
+                    StreamURL:
+                      type: "string"
+                      format: "uri"
+                      example: "https://rsq8.renplay.com/renplay/tracks/15-11-2023/EMMANUEL-DIOSENCASA-1080p.mp4/playlist.m3u8"
+                    AlbumID:
+                      type: "integer"
+                      example: 19
+                    TrackNumber:
+                      type: "integer"
+                      example: 13
+                    IsVideo:
+                      type: "boolean"
+                      example: true
+                    Artists:
+                      type: "array"
+                      items:
+                        type: "object"
+                        properties:
+                          ArtistID:
+                            type: "integer"
+                    Genres:
+                      type: "array"
+                      items:
+                        type: "object"
+                        properties:
+                          GenreID:
+                            type: "integer"
+                    Active:
+                      type: "boolean"
+                      example: true
+                    Status:
+                      type: "string"
+                      example: "publicado"
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: ""
+    
+    put:
+      tags:
+        - "creators"
+      summary: "Editar una pista de un álbum"
+      description: "Actualiza la información de una pista específica de un álbum asociado con el creador."
+      operationId: "editAlbumTrack"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                CreatorID:
+                  type: "string"
+                  example: "UmVuUGxheTIwMjMk"
+                Track:
+                  type: "object"
+                  required: ["TrackID"]
+                  properties:
+                    TrackID:
+                      type: "integer"
+                      example: 276
+                    Title:
+                      type: "string"
+                      example: "Dios En Casa"
+                    Length:
+                      type: "integer"
+                      example: 292
+                    StreamURL:
+                      type: "string"
+                      format: "uri"
+                      example: "https://rsq8.renplay.com/renplay/tracks/18-09-2023/DIOSENCASA_MIELSANMARCOS720.mp4/playlist.m3u8"
+                    AlbumID:
+                      type: "integer"
+                      example: 19
+                    TrackNumber:
+                      type: "integer"
+                      example: 1
+                    IsVideo:
+                      type: "boolean"
+                      example: true
+                    Artists:
+                      type: "array"
+                      items:
+                        type: "object"
+                        properties:
+                          ArtistID:
+                            type: "integer"
+                    Genres:
+                      type: "array"
+                      items:
+                        type: "object"
+                        properties:
+                          GenreID:
+                            type: "integer"
+                    Active:
+                      type: "boolean"
+                      example: true
+                    Status:
+                      type: "string"
+                      example: "publicado"
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: ""
+
+    delete:
+      tags:
+        - "creators"
+      summary: "Eliminar una pista de un álbum"
+      description: "Elimina una pista específica de un álbum asociado con el creador."
+      operationId: "deleteAlbumTrack"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                CreatorID:
+                  type: "string"
+                  example: "UmVuUGxheTIwMjMk"
+                Track:
+                  type: "object"
+                  properties:
+                    TrackID:
+                      type: "integer"
+                      example: 36
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: ""
+  /creators/album/track/status:
+      put:
+        tags:
+          - "creators"
+        summary: "Cambiar el estado de una pista de un álbum"
+        description: "Permite a los creadores cambiar el estado de una pista específica dentro de un álbum en su catálogo."
+        operationId: "changeAlbumTrackStatus"
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  CreatorID:
+                    type: "string"
+                    example: "UmVuUGxheTIwMjMk"
+                  Track:
+                    type: "object"
+                    required: ["TrackID", "Status"]
+                    properties:
+                      TrackID:
+                        type: "integer"
+                        example: 9
+                      Status:
+                        type: "string"
+                        example: "publicado"
+                        enum:
+                          - "publicado"
+                          - "no publicado"
+                          - "en revisión"
+                          - "archivado"
+        responses:
+          "200":
+            description: ""
+          "400":
+            description: ""
+  /creators/get/album:
+    put:
+      tags:
+        - "creators"
+      summary: "Obtener información de un álbum"
+      description: "Recupera la información sobre un álbum específico basado en el CreatorID y AlbumID."
+      operationId: "getAlbumInfo"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                CreatorID:
+                  type: "string"
+                  example: "UmVuUGxheTIwMjMk"
+                Album:
+                  type: "object"
+                  required: ["AlbumID"]
+                  properties:
+                    AlbumID:
+                      type: "integer"
+                      example: 19
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: ""
+  /creators/podcast:
+    post:
+      tags:
+        - "creators"
+      summary: "Crear un nuevo podcast"
+      description: "Permite a los creadores añadir un nuevo podcast a su catálogo con la información proporcionada."
+      operationId: "createPodcast"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                CreatorID:
+                  type: "string"
+                  example: "UmVuUGxheTIwMjMk"
+                Podcast:
+                  type: "object"
+                  properties:
+                    Title:
+                      type: "string"
+                      example: "Ruddy Gracia"
+                    Description:
+                      type: "string"
+                      example: "Mensaje Completos de Bishop Ruddy Gracia fundador del ministerio Segadores de Vida..."
+                    Language:
+                      type: "string"
+                      example: "es"
+                    PortadaURL:
+                      type: "string"
+                      format: "uri"
+                      example: "https://is1-ssl.mzstatic.com/image/thumb/Podcasts125/v4/94/12/43/9412435d-5289-f377-2162-b9f42951727e/mza_15457557164766212277.jpg/626x0w.webp"
+                    ReleaseDate:
+                      type: "string"
+                      format: "date-time"
+                      example: "2017-08-09T00:00:00"
+                    Artists:
+                      type: "array"
+                      items:
+                        type: "object"
+                        properties:
+                          ArtistID:
+                            type: "integer"
+                            example: 127
+                    Active:
+                      type: "boolean"
+                      example: true
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: ""
+
+    put:
+      tags:
+        - "creators"
+      summary: "Editar un podcast"
+      description: "Permite a los creadores actualizar la información de un podcast existente en su catálogo."
+      operationId: "editPodcast"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                CreatorID:
+                  type: "string"
+                  example: "UmVuUGxheTIwMjMk"
+                Podcast:
+                  type: "object"
+                  properties:
+                    PodcastID:
+                      type: "integer"
+                      example: 2
+                    Title:
+                      type: "string"
+                      example: "Ruddy Gracia"
+                    Description:
+                      type: "string"
+                      example: "Mensajes Completos de Bishop Ruddy Gracia fundador del ministerio Segadores de Vida..."
+                    Language:
+                      type: "string"
+                      example: "es"
+                    PortadaURL:
+                      type: "string"
+                      format: "uri"
+                      example: "https://is1-ssl.mzstatic.com/image/thumb/Podcasts125/v4/94/12/43/9412435d-5289-f377-2162-b9f42951727e/mza_15457557164766212277.jpg/626x0w.webp"
+                    ReleaseDate:
+                      type: "string"
+                      format: "date-time"
+                      example: "2017-08-09T00:00:00"
+                    Artists:
+                      type: "array"
+                      items:
+                        type: "object"
+                        properties:
+                          ArtistID:
+                            type: "integer"
+                            example: 127
+                    Active:
+                      type: "boolean"
+                      example: true
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: ""   
+    delete:
+        tags:
+          - "creators"
+        summary: "Eliminar un podcast"
+        description: "Permite a los creadores eliminar un podcast de su catálogo."
+        operationId: "deletePodcast"
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  CreatorID:
+                    type: "string"
+                    example: "UmVuUGxheTIwMjMk"
+                  Podcast:
+                    type: "object"
+                    properties:
+                      PodcastID:
+                        type: "integer"
+                        example: 3
+        responses:
+          "200":
+            description: ""
+          "400":
+            description: ""
+  /creators/get/podcast:
+        put:
+          tags:
+            - "creators"
+          summary: "Obtener información de un podcast"
+          description: "Recupera la información sobre un podcast específico basado en el CreatorID y PodcastID."
+          operationId: "getPodcastinfo"
+          requestBody:
+            required: true
+            content:
+              application/json:
+                schema:
+                  type: "object"
+                  properties:
+                    CreatorID:
+                      type: "string"
+                      example: "UmVuUGxheTIwMjMk"
+                    Podcast:
+                      type: "object"
+                      required: ["PodcastID"]
+                      properties:
+                        PodcastID:
+                          type: "integer"
+                          example: 2
+          responses:
+            "200":
+              description: ""
+            "400":
+              description: ""
+
+  /creators/podcast/track:
+    post:
+      tags:
+        - "creators"
+      summary: "Crear una nueva pista para un podcast"
+      description: "Permite a los creadores añadir una nueva pista a un podcast en su catálogo con la información proporcionada."
+      operationId: "createPodcastTrack"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                CreatorID:
+                  type: "string"
+                  example: "UmVuUGxheTIwMjMk"
+                Track:
+                  type: "object"
+                  properties:
+                    Title:
+                      type: "string"
+                      example: "La facultad de la felicidad"
+                    Length:
+                      type: "integer"
+                      example: 4140
+                    StreamURL:
+                      type: "string"
+                      format: "uri"
+                      example: "https://rsq8.renplay.com/renplay/tracks/13-10-2023/Lafacultaddelafelicidad.mp3/playlist.m3u8"
+                    PodcastID:
+                      type: "integer"
+                      example: 2
+                    TrackNumber:
+                      type: "integer"
+                      example: 348
+                    IsVideo:
+                      type: "boolean"
+                      example: false
+                    Artists:
+                      type: "array"
+                      items:
+                        type: "object"
+                        properties:
+                          ArtistID:
+                            type: "integer"
+                            example: 127
+                    Active:
+                      type: "boolean"
+                      example: true
+                    ReleaseDate:
+                      type: "string"
+                      format: "date-time"
+                      example: "2023-10-09T10:00:00"
+                    Status:
+                      type: "string"
+                      example: "publicado"
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: ""
+        "409":
+          description: ""
+
+    put:
+      tags:
+        - "creators"
+      summary: "Editar una pista de podcast"
+      description: "Permite a los creadores actualizar la información de una pista específica de un podcast en su catálogo."
+      operationId: "editPodcastTrack"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                CreatorID:
+                  type: "string"
+                  example: "UmVuUGxheTIwMjMk"
+                Track:
+                  type: "object"
+                  properties:
+                    TrackID:
+                      type: "integer"
+                      example: 6
+                    Title:
+                      type: "string"
+                      example: "La facultad de la felicidad"
+                    Length:
+                      type: "integer"
+                      example: 4140
+                    StreamURL:
+                      type: "string"
+                      format: "uri"
+                      example: "https://rsq8.renplay.com/renplay/tracks/13-10-2023/Lafacultaddelafelicidad.mp3/playlist.m3u8"
+                    PodcastID:
+                      type: "integer"
+                      example: 2
+                    TrackNumber:
+                      type: "integer"
+                      example: 348
+                    IsVideo:
+                      type: "boolean"
+                      example: false
+                    Artists:
+                      type: "array"
+                      items:
+                        type: "object"
+                        properties:
+                          ArtistID:
+                            type: "integer"
+                            example: 127
+                    Active:
+                      type: "boolean"
+                      example: true
+                    ReleaseDate:
+                      type: "string"
+                      format: "date-time"
+                      example: "2023-10-09T11:00:00"
+                    Status:
+                      type: "string"
+                      example: "publicado"
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: ""
+    delete:
+      tags:
+        - "creators"
+      summary: "Eliminar una pista de podcast"
+      description: "Permite a los creadores eliminar una pista específica de un podcast en su catálogo."
+      operationId: "deletePodcastTrack"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                CreatorID:
+                  type: "string"
+                  example: "UmVuUGxheTIwMjMk"
+                Track:
+                  type: "object"
+                  properties:
+                    TrackID:
+                      type: "integer"
+                      example: 4
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: "Solicitud incorrecta, falta información necesaria."
+        "404":
+          description: "Pista no encontrada."
+  /creators/list/podcast:
+    put:
+      tags:
+        - "creators"
+      summary: "Listar los podcasts de un creador"
+      description: "Obtiene un listado de todos los podcasts asociados con un creador específico."
+      operationId: "listPodcastsByCreator"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                CreatorID:
+                  type: "string"
+                  example: "UmVuUGxheTIwMjMk"
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: ""      
+  /creators/tracklink:
+    put:
+      tags:
+        - "creators"
+      summary: "Actualizar enlace de una pista"
+      description: "s"
+      operationId: "updateTracklink"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                CreatorID:
+                  type: "string"
+                  example: "UmVuUGxheTIwMjMk"
+                TrackID:
+                  type: "integer"
+                  example: 1
+                ContentType:
+                  type: "string"
+                  example: "podcasttrack"
+                  enum:
+                    - "musictrack"
+                    - "podcasttrack"
+                    - "audiobooktrack"
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: ""          
+  /creators/podcast/track/status:
+    put:
+      tags:
+        - "creators"
+      summary: "Cambiar el estado de una pista de podcast"
+      description: "Permite a los creadores cambiar el estado de una pista de podcast en su catálogo."
+      operationId: "updatePodcastTrackStatus"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                CreatorID:
+                  type: "string"
+                  example: "UmVuUGxheTIwMjMk"
+                Track:
+                  type: "object"
+                  required: ["TrackID", "Status"]
+                  properties:
+                    TrackID:
+                      type: "integer"
+                      example: 1
+                    Status:
+                      type: "string"
+                      example: "publicado"
+                      enum:
+                        - "publicado"
+                        - "no publicado" ####Falta revisar estos####
+                        - "en revisión"
+                        - "archivado"
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: "."
+        "404":
+          description: ""     
+  /creators/list/genres:
+    put:
+      tags:
+        - "creators"
+      summary: "Listar los géneros de un creador"
+      description: "Obtiene un listado de todos los géneros asociados con un creador específico."
+      operationId: "listGenresByCreator"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                CreatorID:
+                  type: "string"
+                  example: "UmVuUGxheTIwMjMk"
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: ""          
+  /creators/genre:
+    post:
+      tags:
+        - "creators"
+      summary: "Crear un nuevo género"
+      description: "Permite a los creadores añadir un nuevo género musical a su catálogo."
+      operationId: "createGenre"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                CreatorID:
+                  type: "string"
+                  example: "UmVuUGxheTIwMjMk"
+                Genre:
+                  type: "object"
+                  properties:
+                    Name_en:
+                      type: "string"
+                      example: "Blues"
+                    Name_es:
+                      type: "string"
+                      example: "Blues"
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: ""          
+
+    put:
+      tags:
+        - "creators"
+      summary: "Editar un género"
+      description: "Permite a los creadores actualizar la información de un género musical en su catálogo."
+      operationId: "editGenre"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              required: 
+                - "GenreID"
+              properties:
+                CreatorID:
+                  type: "string"
+                  example: "UmVuUGxheTIwMjMk"
+                Genre:
+                  type: "object"
+                  properties:
+                    Name_en:
+                      type: "string"
+                      example: "Blues"
+                    Name_es:
+                      type: "string"
+                      example: "Blues"
+                    GenreID:
+                      type: "integer"
+                      example: 11
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: ""
+        "404":
+          description: "Género no encontrado."
+
+    delete:
+      tags:
+        - "creators"
+      summary: "Eliminar un género musical"
+      description: "Permite a los creadores eliminar un género musical de su catálogo."
+      operationId: "deleteGenre"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              required: 
+                - "GenreID"
+              properties:
+                CreatorID:
+                  type: "string"
+                  example: "UmVuUGxheTIwMjMk"
+                Genre:
+                  type: "object"
+                  properties:
+                    GenreID:
+                      type: "integer"
+                      example: 11
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: ""
+  /music/homelib:
+    post:
+      tags:
+        - "homeLib"
+      summary: "Crear un nuevo ítem en la biblioteca personal"
+      description: "Permite a los usuarios añadir un nuevo ítem a su biblioteca de música personal en la plataforma."
+      operationId: "crearItemBibliotecaPersonal"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              required:
+                - DeviceID
+                - ProfileID
+                - HomeLibItem
+              properties:
+                DeviceID:
+                  type: "string"
+                  example: "cmMdk1g8E-ID40g0cqe8tiGb5AlGnlKLcPaVRKkrv2g"
+                ProfileID:
+                  type: "integer"
+                  example: 216
+                HomeLibItem:
+                  type: "object"
+                  required:
+                    - ContentType
+                    - ItemID
+                  properties:
+                    ContentType:
+                      type: "string"
+                      example: "album"
+                    ItemID:
+                      type: "integer"
+                      example: 3
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: ""
+
+    put:
+      tags:
+        - "homeLib"
+      summary: "Obtener el resumen de HomeLib"
+      description: "Obtiene el resumen de los ítems de la biblioteca personal de música del usuario."
+      operationId: "obtenerResumenHomeLib"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              required:
+                - DeviceID
+                - ProfileID
+              properties:
+                DeviceID:
+                  type: "string"
+                  example: "cmMdk1g8E-ID40g0cqe8tiGb5AlGnlKLcPaVRKkrv2g"
+                ProfileID:
+                  type: "integer"
+                  example: 216
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: ""
+
+    delete:
+      tags:
+        - "homeLib"
+      summary: "Eliminar un ítem de la biblioteca personal"
+      description: "Permite a los usuarios eliminar un ítem específico de su biblioteca de música personal en la plataforma."
+      operationId: "eliminarItemBibliotecaPersonal"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              required:
+                - DeviceID
+                - ProfileID
+                - HomeLibItem
+              properties:
+                DeviceID:
+                  type: "string"
+                  example: "cmMdk1g8E-ID40g0cqe8tiGb5AlGnlKLcPaVRKkrv2g"
+                ProfileID:
+                  type: "integer"
+                  example: 216
+                HomeLibItem:
+                  type: "object"
+                  required:
+                    - ContentType
+                    - ItemID
+                  properties:
+                    ContentType:
+                      type: "string"
+                      example: "album"
+                    ItemID:
+                      type: "integer"
+                      example: 3
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: ""
+          ######FALTA ENCONTRAR LA MANERA EN QUE FUNCIONE######
+  /music/hl:
+    put:
+      tags:
+        - "homeLib"
+      summary: "Obtener sección de HomeLib"
+      description: "Obtiene una sección específica de la biblioteca de música personal del usuario, como playlists, álbumes, artistas, pistas, audiolibros, pistas de audiolibros, podcasts, pistas de podcasts o videoclips."
+      operationId: "obtenerSeccionHomeLib"
+      parameters:
+        - in: query
+          name: ContentType
+          required: true
+          schema:
+            type: "string"
+            enum: ["musiccollection", "album", "artist", "track", "audiobook", "audiobooktrack", "podcast", "podcasttrack", "videoclip"]
+          description: "El tipo de contenido de la biblioteca personal que se desea obtener."
+        - in: header
+          name: DeviceID
+          required: true
+          schema:
+            type: "string"
+            example: "cmMdk1g8E-ID40g0cqe8tiGb5AlGnlKLcPaVRKkrv2g"
+          description: "Identificador único del dispositivo del usuario."
+        - in: header
+          name: ProfileID
+          required: true
+          schema:
+            type: "integer"
+            example: 216
+          description: "Identificador del perfil del usuario en la plataforma."
+      responses:
+        "200":
+          description: ""
+        
+        "400":
+          description: ""
+  /music/related:
+    put:
+      tags:
+        - "RelatedContent"
+      summary: "Obtiene el contenido relacionado al artista solicitado"
+      description: "Devuelve información de contenido relacionado con un artista específico, como álbumes, pistas o contenido de similar interés basado en el artista proporcionado."
+      operationId: "obtenerContenidoRelacionadoArtista"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                DeviceID:
+                  type: "string"
+                  example: "cmMdk1g8E-ID40g0cqe8tiGb5AlGnlKLcPaVRKkrv2g"
+                ProfileID:
+                  type: "integer"
+                  example: 216
+                MediaItem:
+                  type: "object"
+                  properties:
+                    ContentType:
+                      type: "string"
+                      example: "artist"
+                    ItemID:
+                      type: "integer"
+                      example: 73
+      responses:
+        "200":
+          description: ""
+        
+        "400":
+          description: ""
