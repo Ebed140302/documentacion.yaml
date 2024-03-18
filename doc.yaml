@@ -2628,7 +2628,41 @@ paths:
         
         "400":
           description: ""
-
+  /music/related:
+    put:
+      tags:
+        - "RelatedContent"
+      summary: "Obtiene el contenido relacionado al artista solicitado"
+      description: "Devuelve información de contenido relacionado con un artista específico, como álbumes, pistas o contenido de similar interés basado en el artista proporcionado."
+      operationId: "obtenerContenidoRelacionadoArtista"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                DeviceID:
+                  type: "string"
+                  example: "cmMdk1g8E-ID40g0cqe8tiGb5AlGnlKLcPaVRKkrv2g"
+                ProfileID:
+                  type: "integer"
+                  example: 216
+                MediaItem:
+                  type: "object"
+                  properties:
+                    ContentType:
+                      type: "string"
+                      example: "artist"
+                    ItemID:
+                      type: "integer"
+                      example: 73
+      responses:
+        "200":
+          description: ""
         
+        "400":
+          description: ""
+
         "400":
           description: ""
