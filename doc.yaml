@@ -2663,7 +2663,30 @@ paths:
         
         "400":
           description: ""
-        "40":
+            /creators/owner/info:
+  /creators/owner/info:
+    put:
+      tags:
+        - "creators"
+      summary: "Obtener información del cliente"
+      description: "-"
+      operationId: "."
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                CreatorID:
+                  type: "string"
+                  example: "UmVuUGxheTIwMjMk"
+                CreatorRegID:
+                  type: "integer"
+                  example: 2
+      responses:
+        "200":
           description: ""
-        
+        "400":
+          description: ""
       
