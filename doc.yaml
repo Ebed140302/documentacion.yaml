@@ -2663,7 +2663,7 @@ paths:
         
         "400":
           description: ""
-            /creators/owner/info:
+           
   /creators/owner/info:
     put:
       tags:
