@@ -32,7 +32,7 @@ paths:
       tags:
         - "music"
       summary: " Busqueda global de contenido"
-      description: "Este endpoint está relacionado con la búsqueda en la biblioteca de música, permitiendo a los usuarios encontrar canciones y álbumes utilizando diversos criterios."
+      description: "Este endpoint está relacionado con la búsqueda en la biblioteca de música, permitiendo a los usuarios encontrar canciones y álbumes utilizando diversos criterios. (Fallando al momento de buscar podcast, audiobooks y al momento de buscar un track en especifico no lo muestra al inicio sino al final)"
       operationId: "searchMusic"
       requestBody:
         required: true
