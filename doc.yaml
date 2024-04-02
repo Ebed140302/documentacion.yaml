@@ -2694,7 +2694,7 @@ paths:
     post:
       tags:
         - "creators"
-      summary: "Iniciar sesión como propietario"
+      summary: "Iniciar sesión como creador"
       description: "Permite a un propietario iniciar sesión en su cuenta proporcionando su correo electrónico y contraseña."
       operationId: "ownerLogin"
       requestBody:
@@ -2721,8 +2721,8 @@ paths:
     post:
       tags:
         - "creators"
-      summary: "Crear propietario"
-      description: "Permite crear un nuevo propietario con la información proporcionada."
+      summary: "Crear creador"
+      description: "Permite crear un nuevo usuario con la información proporcionada."
       operationId: "createOwner"
       requestBody:
         required: true
