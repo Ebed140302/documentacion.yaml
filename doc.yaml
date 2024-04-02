@@ -2690,3 +2690,71 @@ paths:
         "400":
           description: ""
       
+  /creators/owner/login:
+    post:
+      tags:
+        - "creators"
+      summary: "Iniciar sesión como propietario"
+      description: "Permite a un propietario iniciar sesión en su cuenta proporcionando su correo electrónico y contraseña."
+      operationId: "ownerLogin"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                Email:
+                  type: "string"
+                  format: "email"
+                  example: "mpadill@renplay.com"
+                Password:
+                  type: "string"
+                  example: "JDJ5JDEwJFlkR3FzbTRKU2RMTnFzRDhkQkxDdXVEVkVKVXU1c2I4UFdrRm1YV2NDVmp6eldYS1gvenJh"
+      responses:
+        "200":
+          description: "."
+         
+        "400":
+          description: ""
+  /creators/owner/create:
+    post:
+      tags:
+        - "creators"
+      summary: "Crear propietario"
+      description: "Permite crear un nuevo propietario con la información proporcionada."
+      operationId: "createOwner"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                CreatorID:
+                  type: "string"
+                  example: "UmVuUGxheTIwMjMk"
+                Creator:
+                  type: "object"
+                  properties:
+                    UserName:
+                      type: "string"
+                      example: "DonPec"
+                    Name:
+                      type: "string"
+                      example: "Marco Padilla"
+                    Email:
+                      type: "string"
+                      format: "email"
+                      example: "dot@renplay.com"
+                    Password:
+                      type: "string"
+                      example: "Jx1zfLfaaEqv7nA4nM2XPQ=="
+                    Phone:
+                      type: "string"
+                      example: "8115557980"
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: ""
