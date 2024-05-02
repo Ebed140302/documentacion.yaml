@@ -3,7 +3,8 @@ info:
   description: "API de RenPlay para la gestión de contenidos multimedia"
   version: "1.0.0"
   title: "RenPlay API"
-  
+  contact:
+    name: RenPlay
  
 tags:
   - name: "music"
