@@ -2020,7 +2020,7 @@ paths:
     put:
       tags:
         - "creators"
-      summary: "Obtener la lista de artistas (Documentado)"
+      summary: "Obtener la lista de artistas (Documentado) ✓ "
       description: "Devuelve una lista de artistas asociados con el creador especificado por el CreatorID."
       operationId: "listArtistsByCreator"
       requestBody:
@@ -2115,7 +2115,7 @@ paths:
     post:
         tags:
           - "creators"
-        summary: "Crear un nuevo artista (Documentado)"
+        summary: "Crear un nuevo artista (Documentado) ✓ "
         description: "Permite a los creadores añadir un nuevo artista a su lista con la información proporcionada."
         operationId: "createArtist"
         requestBody:
@@ -2258,7 +2258,7 @@ paths:
     put:
       tags:
         - "creators"
-      summary: "Editar información de un artista (Documentado)"
+      summary: "Editar información de un artista (Documentado) ✓"
       description: "Actualiza la información de un artista basado en el CreatorID y los detalles provistos."
       operationId: "editArtistInfo"
       requestBody:
@@ -2408,7 +2408,7 @@ paths:
     delete:
           tags:
             - "creators"
-          summary: "Eliminar un artista (Documentado)"
+          summary: "Eliminar un artista (Documentado) ✓"
           description: "Elimina un artista específico asociado con el creador especificado por el CreatorID."
           operationId: "deleteArtist"
           requestBody:
@@ -2506,7 +2506,7 @@ paths:
     post:
       tags:
         - "creators"
-      summary: "Crear un nuevo álbum (Documentado)"
+      summary: "Crear un nuevo álbum (Documentado) ✓"
       description: "Permite a los creadores añadir un nuevo álbum a su catálogo con la información proporcionada."
       operationId: "createAlbum"
       requestBody:
@@ -2691,7 +2691,7 @@ paths:
     put:
       tags:
         - "creators"
-      summary: "Editar información de un álbum (Documentado)"
+      summary: "Editar información de un álbum (Documentado) ✓"
       description: "Actualiza la información de un álbum existente basado en el CreatorID y los detalles proporcionados en el cuerpo de la solicitud."
       operationId: "editAlbum"
       requestBody:
@@ -2703,10 +2703,13 @@ paths:
               properties:
                 CreatorID:
                   type: "string"
-                  example: "UmVuUGxheTIwMjMk"
+                  example: xO4RhdK_YoFTS9V9ngNZhmRmzYI9sxL2ZMFz97Fj5Jc
                 Album:
                   type: "object"
                   properties:
+                    AlbumID:
+                      type: "integer"
+                      example: 112
                     
                     Title:
                       type: "string"
@@ -2879,7 +2882,7 @@ paths:
     delete:
       tags:
         - "creators"
-      summary: "Eliminar un álbum (Documentado)"
+      summary: "Eliminar un álbum (Documentado) ✓"
       description: "Elimina un álbum asociado con el creador especificado por el CreatorID."
       operationId: "deleteAlbumByCreator"
       requestBody:
@@ -2995,7 +2998,7 @@ paths:
     put:
       tags:
         - "creators"
-      summary: "Obtener lista de álbumes (Documentado)"
+      summary: "Obtener lista de álbumes (Documentado)  ✓"
       description: "Obtiene una lista de todos los álbumes asociados con el creador especificado por el CreatorID. ERROR CUANDO SE USA ESTE CREATORID: UmVuUGxheTIwMjMk"
       operationId: "listAlbumsByCreator"
       requestBody:
@@ -3972,7 +3975,7 @@ paths:
     post:
       tags:
         - "creators"
-      summary: "Crear un nuevo podcast (Documentado)"
+      summary: "Crear un nuevo podcast (Documentado) ✓"
       description: "Permite a los creadores añadir un nuevo podcast a su catálogo con la información proporcionada."
       operationId: "createPodcast"
       requestBody:
@@ -4156,7 +4159,7 @@ paths:
     put:
       tags:
         - "creators"
-      summary: "Editar un podcast ((Marca error con ID 2 en podcast probar con PodcastID 7) (Documentado)" 
+      summary: "Editar un podcast  (Documentado) ✓" 
       description: "Permite a los creadores actualizar la información de un podcast existente en su catálogo. "
       operationId: "editPodcast"
       requestBody:
@@ -4174,7 +4177,7 @@ paths:
                   properties:
                     PodcastID:
                       type: "integer"
-                      example: 2
+                      example: 7
                     Title:
                       type: "string"
                       example: "Ruddy Gracia"
@@ -4302,7 +4305,7 @@ paths:
     delete:
         tags:
           - "creators"
-        summary: "Eliminar un podcast (Documentado)"
+        summary: "Eliminar un podcast (Documentado) ✓"
         description: "Permite a los creadores eliminar un podcast de su catálogo."
         operationId: "deletePodcast"
         requestBody:
@@ -5106,7 +5109,7 @@ paths:
     put:
       tags:
         - "creators"
-      summary: "Listar los podcasts de un creador (Documentado)"
+      summary: "Listar los podcasts de un creador (Documentado) ✓"
       description: "Obtiene un listado de todos los podcasts asociados con un creador específico."
       operationId: "listPodcastsByCreator"
       requestBody:
@@ -5500,7 +5503,7 @@ paths:
     put:
       tags:
         - "creators"
-      summary: "Listar los géneros de un creador (Documentado) preguntar sobre este"
+      summary: "Listar los géneros de un creador (Documentado) ✓"
       description: "Obtiene un listado de todos los géneros asociados con un creador específico."
       operationId: "listGenresByCreator"
       requestBody:
@@ -5603,7 +5606,7 @@ paths:
     post:
       tags:
         - "creators"
-      summary: "Crear un nuevo género (Documentado)"
+      summary: "Crear un nuevo género (Documentado) ✓"
       description: "Permite a los creadores añadir un nuevo género musical a su catálogo."
       operationId: "createGenre"
       requestBody:
@@ -5727,7 +5730,7 @@ paths:
     put:
       tags:
         - "creators"
-      summary: "Editar un género (Documentado)"
+      summary: "Editar un género (Documentado) ✓"
       description: "Permite a los creadores actualizar la información de un género musical en su catálogo"
       operationId: "editGenre"
       requestBody:
@@ -5747,13 +5750,13 @@ paths:
                   properties:
                     Name_en:
                       type: "string"
-                      example: "Blues"
+                      example: "Pruebas"
                     Name_es:
                       type: "string"
-                      example: "Blues"
+                      example: "Pruebas"
                     GenreID:
                       type: "integer"
-                      example: 11
+                      example: 28
       responses:
         "200":
           description: "Item editado con éxito"
@@ -5863,7 +5866,7 @@ paths:
     delete:
       tags:
         - "creators"
-      summary: "Eliminar un género musical (Documentado)"
+      summary: "Eliminar un género musical (Documentado) ✓"
       description: "Permite a los creadores eliminar un género musical de su catálogo."
       operationId: "deleteGenre"
       requestBody:
@@ -5956,7 +5959,7 @@ paths:
     put:
       tags:
         - "creators"
-      summary: "Obtener información del cliente (Documentado)"
+      summary: "Obtener información del cliente (Documentado) "
       description: "-"
       operationId: "."
       requestBody:
@@ -7760,4 +7763,3 @@ paths:
                       - Response:
                           Msg: "Error <1>: El tipo de contenido debe ser 'artist'"
                           Code: 4 
-                    
