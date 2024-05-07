@@ -3115,7 +3115,7 @@ paths:
     post:
       tags:
         - "creators"
-      summary: "Crear una nueva pista en un álbum (Documentado)"
+      summary: "Crear una nueva pista en un álbum (Documentado) ✓"
       description: "Permite a los creadores añadir una nueva pista a un álbum en su catálogo con la información proporcionada."
       operationId: "createAlbumTrack"
       requestBody:
@@ -3325,7 +3325,7 @@ paths:
     put:
       tags:
         - "creators"
-      summary: "Editar una pista de un álbum (Documentado)"
+      summary: "Editar una pista de un álbum (Documentado) ✓"
       description: "Actualiza la información de una pista específica de un álbum asociado con el creador."
       operationId: "editAlbumTrack"
       requestBody:
@@ -3546,7 +3546,7 @@ paths:
     delete:
       tags:
         - "creators"
-      summary: "Eliminar una pista de un álbum (Documentado)"
+      summary: "Eliminar una pista de un álbum (Documentado) ✓"
       description: "Elimina una pista específica de un álbum asociado con el creador."
       operationId: "deleteAlbumTrack"
       requestBody:
@@ -3668,7 +3668,7 @@ paths:
       put:
         tags:
           - "creators"
-        summary: "Cambiar el estado de una pista de un álbum (Documentado)"
+        summary: "Cambiar el estado de una pista de un álbum (Documentado) ✓"
         description: "Permite a los creadores cambiar el estado de una pista específica dentro de un álbum en su catálogo."
         operationId: "changeAlbumTrackStatus"
         requestBody:
@@ -4431,7 +4431,7 @@ paths:
         put:
           tags:
             - "creators"
-          summary: "Obtener información de un podcast (Documentado)"
+          summary: "Obtener información de un podcast (Documentado) ✓"
           description: "Recupera la información sobre un podcast específico basado en el CreatorID y PodcastID."
           operationId: "getPodcastinfo"
           requestBody:
@@ -4576,7 +4576,7 @@ paths:
     post:
       tags:
         - "creators"
-      summary: "Crear una nueva pista para un podcast   (Documentado)"
+      summary: "Crear una nueva pista para un podcast   (Documentado) ✓"
       description: "Permite a los creadores añadir una nueva pista a un podcast en su catálogo con la información proporcionada."
       operationId: "createPodcastTrack"
       requestBody:
@@ -4774,7 +4774,7 @@ paths:
     put:
       tags:
         - "creators"
-      summary: "Editar una pista de podcast (falla con el PodcastID 2 pero se encuentra funcionando con el ID 7) (DOCUMENTADO)"         ####Preguntar sobre este si la documentacion esta bien####
+      summary: "Editar una pista de podcast  (DOCUMENTADO) ✓"         ####Preguntar sobre este si la documentacion esta bien####
       description: "Permite a los creadores actualizar la información de una pista específica de un podcast en su catálogo."
       operationId: "editPodcastTrack"
       requestBody:
@@ -4981,7 +4981,7 @@ paths:
     delete:
       tags:
         - "creators"
-      summary: "Eliminar una pista de podcast (Documentado)"
+      summary: "Eliminar una pista de podcast (Documentado) ✓"
       description: "Permite a los creadores eliminar una pista específica de un podcast en su catálogo."
       operationId: "deletePodcastTrack"
       requestBody:
@@ -5252,7 +5252,7 @@ paths:
     put:
       tags:
         - "creators"
-      summary: "Actualizar enlace de una pista (Documentado)"
+      summary: "Actualizar enlace de una pista (Documentado) ✓"
       description: "s"
       operationId: "updateTracklink"
       requestBody:
@@ -5348,7 +5348,7 @@ paths:
     put:
       tags:
         - "creators"
-      summary: "Cambiar el estado de una pista de podcast  (Documentado)"
+      summary: "Cambiar el estado de una pista de podcast  (Documentado) ✓"
       description: "Permite a los creadores cambiar el estado de una pista de podcast en su catálogo."
       operationId: "updatePodcastTrackStatus"
       requestBody:
@@ -5374,8 +5374,10 @@ paths:
                       enum:
                         - "publicado"
                         - "no publicado" ####Falta revisar estos####
-                        - "en revisión"
-                        - "archivado"
+                        - "procesando"
+                        - "error"
+                        - "borrador"
+                        - "procesado"
       responses:
         "200":
           description: "Item editado con éxito"
@@ -5959,7 +5961,7 @@ paths:
     put:
       tags:
         - "creators"
-      summary: "Obtener información del cliente (Documentado) "
+      summary: "Obtener información del cliente (Documentado)  ✓"
       description: "-"
       operationId: "."
       requestBody:
@@ -6075,7 +6077,7 @@ paths:
     post:
       tags:
         - "creators"
-      summary: "Iniciar sesión como creador (Documentado)"
+      summary: "Iniciar sesión como creador (Documentado)  ✓"
       description: "Permite a un propietario iniciar sesión en su cuenta proporcionando su correo electrónico y contraseña."
       operationId: "ownerLogin"
       requestBody:
@@ -6218,7 +6220,7 @@ paths:
     post:
       tags:
         - "creators"
-      summary: "Crear creador (Documentado)"
+      summary: "Crear creador (Documentado) ✓"
       description: "Permite crear un nuevo usuario con la información proporcionada."
       operationId: "createOwner"
       requestBody:
@@ -6359,7 +6361,7 @@ paths:
     post:
       tags:
         - "creators"
-      summary: "Actualizar contraseña del creador (Documentado)"
+      summary: "Actualizar contraseña del creador (Documentado) ✓"
       description: "Permite actualizar la contraseña del usuario creador con la información proporcionada."
       operationId: "updateOwnerPassword"
       requestBody:
@@ -6517,7 +6519,7 @@ paths:
     post:
       tags:
         - "creators"
-      summary: "Actualizar nombre del creador (Documentado)"
+      summary: "Actualizar nombre del creador (Documentado) ✓"
       description: "Permite actualizar el nombre del usuario creador con la información proporcionada."
       operationId: "updateOwnerName"
       requestBody:
@@ -6698,7 +6700,7 @@ paths:
     post:
       tags:
         - "creators"
-      summary: "Actualizar estado de activación del creador (Documentado)"
+      summary: "Actualizar estado de activación del creador (Documentado) ✓"
       description: "Permite actualizar el estado de activación de la cuenta de un creador usando la información proporcionada."
       operationId: "updateOwnerActivation"
       requestBody:
@@ -6884,7 +6886,7 @@ paths:
     post:
       tags:
         - "creators"
-      summary: "Actualizar el correo electrónico del creador (Documentado)"
+      summary: "Actualizar el correo electrónico del creador (Documentado) ✓"
       description: "Permite actualizar el correo electrónico asociado a un creador especificado por el CreatorID."
       operationId: "updateCreatorEmail"
       requestBody:
@@ -7020,7 +7022,7 @@ paths:
     post:
       tags:
         - "creators"
-      summary: "Actualizar el número de teléfono del creador (Documentado)"
+      summary: "Actualizar el número de teléfono del creador (Documentado) ✓"
       description: "Permite actualizar el número de teléfono asociado a un creador especificado por el CreatorID."
       operationId: "updateCreatorPhone"
       requestBody:
@@ -7763,3 +7765,4 @@ paths:
                       - Response:
                           Msg: "Error <1>: El tipo de contenido debe ser 'artist'"
                           Code: 4 
+                    
